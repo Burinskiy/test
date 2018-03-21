@@ -1,28 +1,30 @@
 <?php
-        //Enter your code here, enjoy!
-
       $str = file_get_contents("INPUT.txt");
 $k = 0;
 $lenmax = 0;
 $len = strlen($str);
-$chain0 = 0;
-$chain1 = 0;
+$pos0 = 0;
+$pos1 = 0;
 while (true) {
-        if($lenmax >$k) {
+        if($lenmax > $len - $k) {
         break;
     }
-        $chain1 = strpos($str, '1', $k);
-        $k = $chain1;
-        $chain0 = strpos($str, '0', $k);
-        if ($chain0 < 1) {
+        $pos1 = strpos($str, '1', $k);
+        $k = $pos1;
+        $pos0 = strpos($str, '0', $k);
+        if ($pos0 < $k) {
         $k = $len;
+        $chain0 = $k;
     }
-    $k = $chain0;
-    if ($chain0 > $chain1) {
-    $lenmax = $chain0 - $chain1;    
+    else {
+    $k = $pos0;
+    }
+    if ($pos0 > $pos1) {
+    $lenmax = $pos0 - $pos1;    
     }
     else
-    $lenmax = $chain1 - $chain0;
+    $lenmax = $pos1 - $pos0;
+    echo $lenmax. " ";
 }
 echo $lenmax. " ";
 $file = fopen("OUTPUT.txt", 'w');
