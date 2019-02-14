@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace ConsoleApp3
 {
@@ -7,13 +8,13 @@ namespace ConsoleApp3
     {
         static void Main(string[] args)
         {
+            int k = 0;
+            int maxlen = 0;
             using (FileStream fstream = File.OpenRead(@"1.txt"))
             {
                 byte[] array = new byte[fstream.Length];
                 fstream.Read(array, 0, array.Length);
                 string textFromFile = System.Text.Encoding.Default.GetString(array);
-                int k = 0;
-                int maxlen = 0;
                 for (int i =0; i< textFromFile.Length; i++)
                 {
                     if (textFromFile[i] == '1' && i != textFromFile.Length - 1)
@@ -39,9 +40,12 @@ namespace ConsoleApp3
                     }
 
                 }
-                Console.WriteLine(maxlen);
             }
-            Console.ReadLine();
+            using (FileStream fstream = new FileStream(@"OUTPUT.txt", FileMode.OpenOrCreate))
+            {
+                byte[] input = Encoding.Default.GetBytes(maxlen.ToString());
+                fstream.Write(input, 0, input.Length);
+            }
         }
     }
 }
